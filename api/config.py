@@ -30,11 +30,8 @@ GEMINI_API_KEY = _load_env_val("GEMINI_API_KEY", "")
 # ==============================================================================
 # 2. Google Earth Engine (GEE) Service Account Credentials
 # ==============================================================================
-GEE_SERVICE_ACCOUNT = _load_env_val(
-    "GEE_SERVICE_ACCOUNT",
-    "earth-engine-service@unique-well-509007-e6.iam.gserviceaccount.com"
-)
-GEE_PROJECT_ID = _load_env_val("GEE_PROJECT_ID", "unique-well-509007-e6")
+GEE_SERVICE_ACCOUNT = _load_env_val("GEE_SERVICE_ACCOUNT", "")
+GEE_PROJECT_ID = _load_env_val("GEE_PROJECT_ID", "")
 GEE_PRIVATE_KEY_PATH = _load_env_val(
     "GEE_PRIVATE_KEY_PATH",
     os.path.join(os.path.dirname(__file__), "gee-credentials.json")
