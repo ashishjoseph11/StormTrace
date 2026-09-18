@@ -14,15 +14,14 @@ This folder is your dedicated space to manage all **API Keys**, **Third-Party In
 
 ## 🔑 How to Add Your API Keys
 
-Set them in the `.env` file at the root of the project (recommended):
+Open [config.py](file:///c:/HACKATHON/api/config.py) and paste your keys directly, or set them in the `.env` file:
 
-```bash
-# In .env:
-GEMINI_API_KEY=your-actual-gemini-key-here
-GEE_SERVICE_ACCOUNT=your-gee-service-account@gcp-project.iam.gserviceaccount.com
+```python
+# In api/config.py:
+GEMINI_API_KEY = "your-actual-gemini-key-here"
+GOOGLE_MAPS_API_KEY = "your-google-maps-key-here"
+WEATHER_API_KEY = "your-weather-key-here"
 ```
-
-Or pass them as system environment variables. [config.py](file:///c:/HACKATHON/api/config.py) automatically reads them dynamically.
 
 ---
 

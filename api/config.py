@@ -5,7 +5,8 @@ Central credentials and configuration for Google Gemini AI and Google Earth Engi
 
 import os
 
-def _load_env_var(var_name: str, default: str = "") -> str:
+# Helper to load key from environment or root .env
+def _load_env_val(var_name: str, default: str = "") -> str:
     val = os.environ.get(var_name, "")
     if not val:
         env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
@@ -24,14 +25,17 @@ def _load_env_var(var_name: str, default: str = "") -> str:
 # ==============================================================================
 # 1. Google Gemini AI API Configuration
 # ==============================================================================
-GEMINI_API_KEY = _load_env_var("GEMINI_API_KEY", "")
+GEMINI_API_KEY = _load_env_val("GEMINI_API_KEY", "")
 
 # ==============================================================================
 # 2. Google Earth Engine (GEE) Service Account Credentials
 # ==============================================================================
-GEE_SERVICE_ACCOUNT = _load_env_var("GEE_SERVICE_ACCOUNT", "")
-GEE_PROJECT_ID = _load_env_var("GEE_PROJECT_ID", "")
-GEE_PRIVATE_KEY_PATH = _load_env_var(
+GEE_SERVICE_ACCOUNT = _load_env_val(
+    "GEE_SERVICE_ACCOUNT",
+    "earth-engine-service@unique-well-509007-e6.iam.gserviceaccount.com"
+)
+GEE_PROJECT_ID = _load_env_val("GEE_PROJECT_ID", "unique-well-509007-e6")
+GEE_PRIVATE_KEY_PATH = _load_env_val(
     "GEE_PRIVATE_KEY_PATH",
     os.path.join(os.path.dirname(__file__), "gee-credentials.json")
 )
@@ -39,9 +43,9 @@ GEE_PRIVATE_KEY_PATH = _load_env_var(
 # ==============================================================================
 # 3. Geospatial, Weather & Alert Gateways (Optional)
 # ==============================================================================
-GOOGLE_MAPS_API_KEY = _load_env_var("GOOGLE_MAPS_API_KEY", "")
-WEATHER_API_KEY = _load_env_var("WEATHER_API_KEY", "")
-SMS_GATEWAY_API_KEY = _load_env_var("SMS_GATEWAY_API_KEY", "")
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY", "")
+WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY", "")
+SMS_GATEWAY_API_KEY = os.environ.get("SMS_GATEWAY_API_KEY", "")
 
 # Helper function to get all active keys
 def get_api_status():
