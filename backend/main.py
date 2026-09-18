@@ -117,7 +117,7 @@ def get_event_updates(event_id: str):
     cursor.execute("SELECT * FROM forecast_updates WHERE event_id = ? ORDER BY update_number ASC;", (event_id,))
     rows = cursor.fetchall()
     conn.close()
-    
+
     result = []
     for r in rows:
         result.append({
@@ -447,7 +447,7 @@ def get_surge_hazard(scenario: str = "central", update_id: str = "update-03"):
     conn = get_connection()
     update_data = get_update_by_id(update_id, conn)
     conn.close()
-    
+
     scenarios = generate_surge_scenarios(update_data["track"])
     chosen = scenarios.get(scenario.lower(), scenarios["central"])
     return chosen
@@ -541,7 +541,7 @@ def approve_advisory(approval: AdvisoryApproval):
     cursor = conn.cursor()
     status = "Dispatched" if approval.approved else "Rejected"
     cursor.execute("""
-    UPDATE advisories 
+    UPDATE advisories
     SET approval_status = ?, approver = ?, dispatch_channel = ?
     WHERE id = ?;
     """, (status, approval.approver_name, approval.dispatch_channel, approval.advisory_id))
@@ -564,7 +564,7 @@ def get_insurance_triggers(update_id: str = "update-03"):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM insurance_policies;")
     policies = cursor.fetchall()
-    
+
     timestamp = "2026-05-18T18:30:00Z"
     if update_id == "update-01":
         timestamp = "2026-05-17T06:00:00Z"
@@ -758,7 +758,7 @@ def update_action_status(action_id: str, payload: ActionUpdate):
     if payload.notes:
         updates.append("notes = ?")
         params.append(payload.notes)
-    
+
     updates.append("updated_at = datetime('now')")
     params.append(action_id)
 
@@ -882,6 +882,12 @@ def citizen_copilot_endpoint(payload: Dict[str, Any] = Body(...)):
 frontend_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 if os.path.exists(frontend_dir):
     app.mount("/static", StaticFiles(directory=frontend_dir), name="static")
+    css_dir = os.path.join(frontend_dir, "css")
+    if os.path.exists(css_dir):
+        app.mount("/css", StaticFiles(directory=css_dir), name="css")
+    js_dir = os.path.join(frontend_dir, "js")
+    if os.path.exists(js_dir):
+        app.mount("/js", StaticFiles(directory=js_dir), name="js")
 
     @app.get("/")
     def serve_index():

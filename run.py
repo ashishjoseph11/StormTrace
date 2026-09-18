@@ -45,8 +45,9 @@ def main():
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
     port = int(os.environ.get("PORT", 8000))
-    host = "127.0.0.1"
-    url = f"http://{host}:{port}"
+    host = os.environ.get("HOST", "0.0.0.0")
+    display_host = "127.0.0.1" if host == "0.0.0.0" else host
+    url = f"http://{display_host}:{port}"
 
     print(f"\n[3/3] Launching ZATICS v3.0 Command Center at {url}")
     print("=" * 70)
